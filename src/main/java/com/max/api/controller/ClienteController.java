@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,6 +64,18 @@ public class ClienteController {
 		clienteRepository.save(cliente);
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	
+	@DeleteMapping("/{clientId}")
+	public ResponseEntity<Cliente> editClient(@PathVariable Long clientId) {
+		if (!clienteRepository.existsById(clientId)){
+			return ResponseEntity.notFound().build();
+			
+		}
+		clienteRepository.deleteById(clientId);
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 }
